@@ -1,5 +1,6 @@
 package com.gordeev.spring.book.service;
 
+import com.gordeev.spring.base.exception.ResourceNotFoundException;
 import com.gordeev.spring.book.entity.BookEntity;
 import org.springframework.stereotype.Service;
 
@@ -45,11 +46,11 @@ public class BookService {
         return book;
     }
 
-    public Optional<BookEntity> edit(BookEntity book) {
-        BookEntity oldBookEntity = byId(book.getId()).orElseThrow();
+    public BookEntity edit(BookEntity book) {
+        BookEntity oldBookEntity = byId(book.getId()).orElseThrow(ResourceNotFoundException::new);
         oldBookEntity.setTitle(book.getTitle());
         oldBookEntity.setDescription(book.getDescription());
-        return Optional.of(oldBookEntity);
+        return oldBookEntity;
     }
 
 }
