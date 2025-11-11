@@ -1,5 +1,6 @@
 package com.gordeev.spring.book.service;
 
+import com.gordeev.spring.base.exception.InvalidPatchFieldException;
 import com.gordeev.spring.base.exception.ResourceNotFoundException;
 import com.gordeev.spring.book.entity.BookEntity;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,8 @@ import java.util.*;
 
 @Service
 public class BookService {
+    private static final Set<String> ALLOWED_FIELDS = Set.of("title", "description");
+
     static List<BookEntity> bookStorage = new ArrayList<>();
 
     public BookService() {
@@ -66,6 +69,9 @@ public class BookService {
 
         BookEntity book = optionalBookEntity.get();
         for (String key : fields.keySet()) {
+            if(!ALLOWED_FIELDS.contains(key)) {
+                throw new InvalidPatchFieldException(key);
+            }
             switch (key) {
                 case "title" -> book.setTitle(fields.get(key));
                 case "description" -> book.setDescription(fields.get(key));

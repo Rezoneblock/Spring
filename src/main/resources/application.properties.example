@@ -1,1 +1,2 @@
-spring.application.name=spring
+spring.application.name=
+server.error.include-message=
