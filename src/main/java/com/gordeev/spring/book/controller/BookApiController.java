@@ -40,9 +40,4 @@ public class BookApiController {
         request.setId(id);
         return bookService.edit(request);
     }
-
-    @DeleteMapping("/api/v1/book/{id}")
-    public Boolean delete(@PathVariable Integer id) {
-        return bookService.delete(id);
-    }
 }
